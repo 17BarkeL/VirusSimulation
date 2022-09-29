@@ -19,7 +19,7 @@ namespace VirusSimulation
         {
             /*Initialise();
             OutputPopulation();*/
-            List<int> numbers = NumberAround(25);
+            List<int> numbers = NumberAround(1);
 
             for (int i = 0; i < numbers.Count; i++)
             {
@@ -97,22 +97,26 @@ namespace VirusSimulation
             List<int> numbersAround = new List<int>();
             int numberAbove = number - outputLineLength;
             int numberBelow = number + outputLineLength;
+            // One list and remove negatives
 
             //14, 15, 16, 24, 25, 26, 34, 35, 36
 
-            numbersAround.Add(numberAbove);
-            numbersAround.Add(numberBelow);
-
             numbersAround.Add(numberAbove - 1);
+            numbersAround.Add(numberAbove);
             numbersAround.Add(numberAbove + 1);
-
             numbersAround.Add(number - 1);
             numbersAround.Add(number + 1);
-
             numbersAround.Add(numberBelow - 1);
+            numbersAround.Add(numberBelow);
             numbersAround.Add(numberBelow + 1);
 
-            numbersAround.Sort();
+            foreach (int num in numbersAround.ToArray())
+            {
+                if (num < 0)
+                {
+                    numbersAround.Remove(num);
+                }
+            }
 
             return numbersAround;
         }
