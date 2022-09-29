@@ -19,7 +19,7 @@ namespace VirusSimulation
         {
             /*Initialise();
             OutputPopulation();*/
-            List<int> numbers = NumberAround(1);
+            List<int> numbers = NumberAround(99);
 
             for (int i = 0; i < numbers.Count; i++)
             {
@@ -97,16 +97,15 @@ namespace VirusSimulation
             List<int> numbersAround = new List<int>();
             int numberAbove = number - outputLineLength;
             int numberBelow = number + outputLineLength;
+            bool onTop = false;
+            bool onBottom = false;
+            bool onLeft = false;
+            bool onRight = false;
             // One list and remove negatives
             // broken with 0
             //14, 15, 16, 24, 25, 26, 34, 35, 36
 
-            numbersAround.Add(numberAbove - 1);
             numbersAround.Add(numberAbove);
-            numbersAround.Add(numberAbove + 1);
-            numbersAround.Add(number - 1);
-            numbersAround.Add(number + 1);
-            numbersAround.Add(numberBelow - 1);
             numbersAround.Add(numberBelow);
             numbersAround.Add(numberBelow + 1);
 
@@ -116,7 +115,39 @@ namespace VirusSimulation
                 {
                     numbersAround.Remove(num);
                 }
+
+                if (number % outputLineLength == 0) { onLeft = true; }
+                if ((number + 1) % outputLineLength == 0) { onRight = true; }
+                if (number < outputLineLength) { onTop = true; }
+                if (number >= populationNumber - outputLineLength) { onBottom = true; }
+
+                if (!onLeft)
+                {
+                    numbersAround.Add(number - 1);
+
+                    if (!onTop)
+                    {
+                        numbersAround.Add(numberAbove - 1);
+                    }
+
+                    if (!onBottom)
+                    {
+                        numbersAround.Add(numberBelow - 1);
+                    }
+                }
+
+                if (!onRight)
+                {
+                    numbersAround.Add(number + 1);
+
+                    if (!onTop)
+                    {
+                        numbersAround.Add(numberAbove + 1);
+                    }
+                }
             }
+
+            Console.WriteLine($"Left: {onLeft}, Right: {onRight}, Top: {onTop}, Bottom: {onBottom}");
 
             return numbersAround;
         }
