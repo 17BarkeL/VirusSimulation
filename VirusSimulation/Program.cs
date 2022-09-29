@@ -98,7 +98,7 @@ namespace VirusSimulation
             int numberAbove = number - outputLineLength;
             int numberBelow = number + outputLineLength;
             // One list and remove negatives
-
+            // broken with 0
             //14, 15, 16, 24, 25, 26, 34, 35, 36
 
             numbersAround.Add(numberAbove - 1);
