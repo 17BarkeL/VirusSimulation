@@ -18,10 +18,15 @@ namespace VirusSimulation
         static void Main(string[] args)
         {
             /*Initialise();
-            OutputPopulation();
+            OutputPopulation();*/
+            List<int> numbers = NumberAround(25);
 
-            Console.ReadLine();*/
-            NumberAround(25);
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                Console.WriteLine(numbers[i]);
+            }
+
+            Console.ReadLine();
         }
 
         public static void Initialise()
@@ -90,9 +95,26 @@ namespace VirusSimulation
         public static List<int> NumberAround(int number)
         {
             List<int> numbersAround = new List<int>();
+            int numberAbove = number - outputLineLength;
+            int numberBelow = number + outputLineLength;
+
+            //14, 15, 16, 24, 25, 26, 34, 35, 36
+
+            numbersAround.Add(numberAbove);
+            numbersAround.Add(numberBelow);
+
+            numbersAround.Add(numberAbove - 1);
+            numbersAround.Add(numberAbove + 1);
 
             numbersAround.Add(number - 1);
             numbersAround.Add(number + 1);
+
+            numbersAround.Add(numberBelow - 1);
+            numbersAround.Add(numberBelow + 1);
+
+            numbersAround.Sort();
+
+            return numbersAround;
         }
     }
 }
