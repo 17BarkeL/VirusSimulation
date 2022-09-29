@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Person
+public class Person
 {
     public bool infected = false;
     public int id;
