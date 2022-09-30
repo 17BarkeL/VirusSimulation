@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 public static class Globals
 {
     public static Random random = new Random();
     public static List<Person> population = new List<Person>();
-    public static int outputLineLength = 100;
-    public static int populationNumber = outputLineLength * 50;
+    public static Timer simulationTimer;
+    public static int outputLineLength = 10;
+    public static int populationNumber = outputLineLength * 10;
     public static int updateInterval = 500;
     public static int infectedNumber = 3;
-    public static int transmissionChance = 10;
+    public static int transmissionChance = 1;
 
     public static void Initialise()
     {
         Console.CursorVisible = false;
+        simulationTimer = new Timer();
 
         population.Clear();
 
@@ -71,7 +74,6 @@ public static class Globals
 
     public static void SpreadVirus()
     {
-        // newly infected also accounted for bug
         List<Person> currentPopulation = population;
         List<Person> newInfected = new List<Person>();
 
