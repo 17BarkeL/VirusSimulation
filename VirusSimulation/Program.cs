@@ -17,6 +17,10 @@ namespace VirusSimulation
             Globals.Initialise();
             Globals.OutputPopulation();
 
+            Console.SetCursorPosition(7, 0);
+            Console.Write("\b");
+            Console.Write("@");
+
             updateTimer = new Timer(Globals.updateInterval);
             updateTimer.Elapsed += Update;
             updateTimer.Start();
@@ -27,7 +31,7 @@ namespace VirusSimulation
         public static void Update(object sender, EventArgs e)
         {
             Globals.SpreadVirus();
-            Console.Clear();
+            //Console.Clear();
 
             int infectedNumber = 0;
 
@@ -39,7 +43,7 @@ namespace VirusSimulation
                 }
             }
 
-            Console.WriteLine($"Infected: {((float)infectedNumber / (float)Globals.population.Count) * 100}%");
+            //Console.WriteLine($"Infected: {((float)infectedNumber / (float)Globals.population.Count) * 100}%");
             Globals.OutputPopulation();
         }
     }

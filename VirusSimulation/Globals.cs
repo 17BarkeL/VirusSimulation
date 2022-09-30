@@ -9,6 +9,7 @@ public static class Globals
 {
     public static Random random = new Random();
     public static List<Person> population = new List<Person>();
+    public static List<Person> peopleToEdit = new List<Person>();
     public static Timer simulationTimer;
     public static int outputLineLength = 10;
     public static int populationNumber = outputLineLength * 10;
@@ -45,15 +46,12 @@ public static class Globals
                 i--;
             }
         }
-    }
 
-    public static void OutputPopulation()
-    {
         foreach (Person person in population)
         {
             if (person.infected)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                //Console.ForegroundColor = ConsoleColor.Green;
             }
 
             Console.Write("■");
@@ -68,8 +66,20 @@ public static class Globals
                 Console.Write(" ");
             }
 
-            Console.ResetColor();
+            //Console.ResetColor();
         }
+    }
+
+    public static void OutputPopulation()
+    {
+        foreach (Person person in peopleToEdit)
+        {
+            Console.SetCursorPosition(person.id + 1, 0);
+            Console.Write("\b");
+            Console.Write("@");
+        }
+
+        peopleToEdit.Clear();
     }
 
     public static void SpreadVirus()
@@ -179,70 +189,5 @@ public static class Globals
         }
 
         return peopleAround;
-    }
-
-    public static List<int> NumberAround(int number)
-    {
-        List<int> numbersAround = new List<int>();
-        int numberAbove = number - outputLineLength;
-        int numberBelow = number + outputLineLength;
-        bool onTop = false;
-        bool onBottom = false;
-        bool onLeft = false;
-        bool onRight = false;
-
-        numbersAround.Add(numberAbove - 1);
-        numbersAround.Add(numberAbove);
-        numbersAround.Add(numberAbove + 1);
-        numbersAround.Add(number - 1);
-        numbersAround.Add(number + 1);
-        numbersAround.Add(numberBelow - 1);
-        numbersAround.Add(numberBelow);
-        numbersAround.Add(numberBelow + 1);
-
-        foreach (int num in numbersAround.ToArray())
-        {
-            if (num < 0)
-            {
-                numbersAround.Remove(num);
-            }
-
-            if (number % outputLineLength == 0) { onLeft = true; }
-            if ((number + 1) % outputLineLength == 0) { onRight = true; }
-            if (number < outputLineLength) { onTop = true; }
-            if (number >= populationNumber - outputLineLength) { onBottom = true; }
-
-            if (onLeft)
-            {
-                numbersAround.Remove(numberAbove - 1);
-                numbersAround.Remove(number - 1);
-                numbersAround.Remove(numberBelow - 1);
-            }
-
-            if (onRight)
-            {
-                numbersAround.Remove(numberAbove + 1);
-                numbersAround.Remove(number + 1);
-                numbersAround.Remove(numberBelow + 1);
-            }
-
-            if (onTop)
-            {
-                numbersAround.Remove(numberAbove - 1);
-                numbersAround.Remove(numberAbove);
-                numbersAround.Remove(numberAbove + 1);
-            }
-
-            if (onBottom)
-            {
-                numbersAround.Remove(numberBelow - 1);
-                numbersAround.Remove(numberBelow);
-                numbersAround.Remove(numberBelow + 1);
-            }
-        }
-
-        Console.WriteLine($"Left: {onLeft}, Right: {onRight}, Top: {onTop}, Bottom: {onBottom}");
-
-        return numbersAround;
     }
 }
