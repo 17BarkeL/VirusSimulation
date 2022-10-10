@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 public class Person
 {
     public bool infected = false;
-    public int id;
+    public int id; 
 }

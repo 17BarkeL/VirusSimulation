@@ -17,7 +17,7 @@ namespace VirusSimulation
             Globals.Initialise();
             Globals.OutputPopulation();
 
-            Console.SetCursorPosition(7, 0); // id + 1
+            Console.SetCursorPosition((Globals.population[9].id * 2) - 1, 0); // 2*id + 1
             Console.Write("\b");
             Console.Write("@");
 
