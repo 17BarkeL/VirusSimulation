@@ -7,15 +7,18 @@ using System.Timers;
 
 public static class Globals
 {
+    // CANNOT CHOOSEONE ALREADY INFECTED WHICH REDUCES CHANCE FOR CORNERS TO GET INFECTED IN AROUND FUCNTION REMOVEONES THAT ARE INFECTED TO CHOOSE FROM
+    // CANNOT CHOOSEONE ALREADY INFECTED WHICH REDUCES CHANCE FOR CORNERS TO GET INFECTED IN AROUND FUCNTION REMOVEONES THAT ARE INFECTED TO CHOOSE FROM
+    // CANNOT CHOOSEONE ALREADY INFECTED WHICH REDUCES CHANCE FOR CORNERS TO GET INFECTED IN AROUND FUCNTION REMOVEONES THAT ARE INFECTED TO CHOOSE FROM
     public static Random random = new Random();
     public static List<Person> population = new List<Person>();
     public static List<Person> peopleToEdit = new List<Person>();
     public static Timer simulationTimer;
     public static int outputLineLength = 10;
     public static int populationNumber = outputLineLength * 10;
-    public static int updateInterval = 500;
+    public static int updateInterval = 1000;
     public static int infectedNumber = 3;
-    public static int transmissionChance = 1;
+    public static int transmissionChance = 10;
 
     public static void Initialise()
     {
@@ -28,6 +31,8 @@ public static class Globals
         {
             Person newPerson = new Person();
             newPerson.id = i;
+            newPerson.X = newPerson.id - (outputLineLength * (newPerson.id / outputLineLength));
+            newPerson.Y = newPerson.id / outputLineLength;
             population.Add(newPerson);
 
         }
@@ -45,18 +50,45 @@ public static class Globals
             {
                 i--;
             }
-        }
 
-        foreach (Person person in population)
+            foreach (Person person in population)
+            {
+                if (person.infected)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+
+                Console.Write("■");
+                person.X = Console.CursorLeft;
+                person.Y = Console.CursorTop;
+
+                if ((population.IndexOf(person) + 1) % outputLineLength == 0)
+                {
+                    Console.Write("\n");
+                }
+
+                else
+                {
+                    Console.Write(" ");
+                }
+
+                Console.ResetColor();
+            }
+        }
+    }
+
+    public static void OutputPopulation()
+    {
+        /*foreach (Person person in population)
         {
             if (person.infected)
             {
-                //Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.Green;
             }
 
             Console.Write("■");
 
-            if ((population.IndexOf(person) + 1) % outputLineLength == 0)
+            if ((population.IndexOf(person) + 1) % outputLineLength == 0) //person.id
             {
                 Console.Write("\n");
             }
@@ -66,17 +98,33 @@ public static class Globals
                 Console.Write(" ");
             }
 
-            //Console.ResetColor();
-        }
-    }
+            Console.ResetColor();
+        }*/
 
-    public static void OutputPopulation()
-    {
-        foreach (Person person in peopleToEdit)
+        foreach (Person personToEdit in peopleToEdit)
         {
-            Console.SetCursorPosition(person.id + 1, 0);
+            Console.SetCursorPosition(personToEdit.X, personToEdit.Y);
+
             Console.Write("\b");
-            Console.Write("@");
+
+            if (personToEdit.infected)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+
+            Console.Write("■");
+
+            if ((personToEdit.id + 1) % outputLineLength == 0) //person.id
+            {
+                Console.Write("\n");
+            }
+
+            else
+            {
+                Console.Write(" ");
+            }
+
+            Console.ResetColor();
         }
 
         peopleToEdit.Clear();
@@ -113,6 +161,7 @@ public static class Globals
         foreach (Person newInfectedP in newInfected)
         {
             newInfectedP.infected = true;
+            peopleToEdit.Add(newInfectedP);
         }
     }
 
@@ -181,11 +230,6 @@ public static class Globals
         foreach (int id in idsAround)
         {
             peopleAround.Add(population[id]);
-        }
-
-        foreach (Person persond in peopleAround)
-        {
-            //Console.Write($"{persond.id}, ");
         }
 
         return peopleAround;
