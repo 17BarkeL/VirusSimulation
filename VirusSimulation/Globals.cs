@@ -137,17 +137,12 @@ public static class Globals
 
         foreach (Person person in currentPopulation)
         {
-            if (person.infected)
+            if (!person.infected)
             {
-                List<Person> possibleInfected = GetPeopleAround(person);
+                List<Person> peopleAround = GetPeopleAround(person);
 
-                foreach (Person possible in possibleInfected)
+                foreach (Person possible in peopleAround)
                 {
-                    if (possible.infected)
-                    {
-                        continue;
-                    }
-
                     int transmissionNumber = random.Next(1, transmissionChance + 1);
 
                     if (transmissionNumber == 1)
@@ -155,6 +150,7 @@ public static class Globals
                         newInfected.Add(possible);
                     }
                 }
+                // (1,0.5), (2,0.75), (3, 0.875) CHANCE MULTIPLIER
             }
         }
 
@@ -225,6 +221,8 @@ public static class Globals
                 idsAround.Remove(idBelow);
                 idsAround.Remove(idBelow + 1);
             }
+
+
         }
 
         foreach (int id in idsAround)
