@@ -13,25 +13,25 @@ namespace VirusSimulation
 
         static void Main(string[] args)
         {
-            // Console optimisation: only change new infected people not re-draw the whole console
-            Globals.Initialise();
+            /*Globals.Initialise();
             Globals.OutputPopulation();
-
-            /*Console.SetCursorPosition(Globals.population[99].X, Globals.population[99].Y);
-            Console.Write("\b");
-            Console.Write("@");*/
 
             updateTimer = new Timer(Globals.updateInterval);
             updateTimer.Elapsed += Update;
-            updateTimer.Start();
+            updateTimer.Start();*/
 
+            float transmissionChance = 4;
+            float peopleAround = 2;
+            float calc;
+
+            calc = ((float)Math.Pow(transmissionChance, peopleAround) - 1) / (float)Math.Pow(transmissionChance, peopleAround);
+            Console.WriteLine(calc);
             Console.ReadLine();
         }
 
         public static void Update(object sender, EventArgs e)
         {
             Globals.SpreadVirus();
-            //Console.Clear();
 
             int infectedNumber = 0;
 

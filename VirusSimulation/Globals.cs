@@ -18,8 +18,8 @@ public static class Globals
     public static int outputLineLength = 10;
     public static int populationNumber = outputLineLength * 10;
     public static int updateInterval = 1000;
-    public static int infectedNumber = 3;
-    public static int transmissionChance = 10;
+    public static int infectedNumber = 1;
+    public static int transmissionChance = 1;
 
     public static void Initialise()
     {
@@ -129,7 +129,9 @@ public static class Globals
                         newInfected.Add(possible);
                     }
                 }
-                // (1,0.5), (2,0.75), (3, 0.875) CHANCE MULTIPLIER
+                // (1,0.5), (2,0.75), (3, 0.875) CHANCE MULTIPLIER | recursion
+
+                float chanceOfTransmission = ((float)Math.Pow(transmissionChance, peopleAround.Count) - 1) / (float)Math.Pow(transmissionChance, peopleAround.Count); ;
             }
         }
         Debug.WriteLine(newInfected.Count);
