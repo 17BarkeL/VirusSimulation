@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,36 +51,9 @@ public static class Globals
             {
                 i--;
             }
-
-            foreach (Person person in population)
-            {
-                if (person.infected)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                }
-
-                Console.Write("■");
-                person.X = Console.CursorLeft;
-                person.Y = Console.CursorTop;
-
-                if ((population.IndexOf(person) + 1) % outputLineLength == 0)
-                {
-                    Console.Write("\n");
-                }
-
-                else
-                {
-                    Console.Write(" ");
-                }
-
-                Console.ResetColor();
-            }
         }
-    }
 
-    public static void OutputPopulation()
-    {
-        /*foreach (Person person in population)
+        foreach (Person person in population)
         {
             if (person.infected)
             {
@@ -87,8 +61,10 @@ public static class Globals
             }
 
             Console.Write("■");
+            person.X = Console.CursorLeft;
+            person.Y = Console.CursorTop;
 
-            if ((population.IndexOf(person) + 1) % outputLineLength == 0) //person.id
+            if ((population.IndexOf(person) + 1) % outputLineLength == 0)
             {
                 Console.Write("\n");
             }
@@ -99,8 +75,11 @@ public static class Globals
             }
 
             Console.ResetColor();
-        }*/
+        }
+    }
 
+    public static void OutputPopulation()
+    {
         foreach (Person personToEdit in peopleToEdit)
         {
             Console.SetCursorPosition(personToEdit.X, personToEdit.Y);
@@ -114,7 +93,7 @@ public static class Globals
 
             Console.Write("■");
 
-            if ((personToEdit.id + 1) % outputLineLength == 0) //person.id
+            if ((personToEdit.id + 1) % outputLineLength == 0)
             {
                 Console.Write("\n");
             }
@@ -153,11 +132,11 @@ public static class Globals
                 // (1,0.5), (2,0.75), (3, 0.875) CHANCE MULTIPLIER
             }
         }
-
-        foreach (Person newInfectedP in newInfected)
+        Debug.WriteLine(newInfected.Count);
+        foreach (Person newInfectedPerson in newInfected)
         {
-            newInfectedP.infected = true;
-            peopleToEdit.Add(newInfectedP);
+            newInfectedPerson.infected = true;
+            peopleToEdit.Add(newInfectedPerson);
         }
     }
 
@@ -221,8 +200,6 @@ public static class Globals
                 idsAround.Remove(idBelow);
                 idsAround.Remove(idBelow + 1);
             }
-
-
         }
 
         foreach (int id in idsAround)
