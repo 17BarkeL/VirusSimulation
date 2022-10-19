@@ -8,18 +8,16 @@ using System.Timers;
 
 public static class Globals
 {
-    // CANNOT CHOOSEONE ALREADY INFECTED WHICH REDUCES CHANCE FOR CORNERS TO GET INFECTED IN AROUND FUCNTION REMOVEONES THAT ARE INFECTED TO CHOOSE FROM
-    // CANNOT CHOOSEONE ALREADY INFECTED WHICH REDUCES CHANCE FOR CORNERS TO GET INFECTED IN AROUND FUCNTION REMOVEONES THAT ARE INFECTED TO CHOOSE FROM
-    // CANNOT CHOOSEONE ALREADY INFECTED WHICH REDUCES CHANCE FOR CORNERS TO GET INFECTED IN AROUND FUCNTION REMOVEONES THAT ARE INFECTED TO CHOOSE FROM
     public static Random random = new Random();
     public static List<Person> population = new List<Person>();
     public static List<Person> peopleToEdit = new List<Person>();
     public static Timer simulationTimer;
-    public static int outputLineLength = 10;
-    public static int populationNumber = outputLineLength * 10;
+    public static int outputLineLength = 50;
+    public static int populationNumber = outputLineLength * 40;
     public static int updateInterval = 1000;
-    public static int infectedNumber = 3;
+    public static int infectedNumber = 10;
     public static int transmissionChance = 10;
+    public static int[] infectedPercentageCoordinates = new int[2];
 
     public static void Initialise()
     {
@@ -52,6 +50,11 @@ public static class Globals
                 i--;
             }
         }
+
+        Console.Write($"Infected: ");
+        infectedPercentageCoordinates[0] = Console.CursorLeft;
+        infectedPercentageCoordinates[1] = Console.CursorTop;
+        Console.WriteLine($"{((float)infectedNumber / (float)population.Count) * 100}%");
 
         foreach (Person person in population)
         {
@@ -113,10 +116,11 @@ public static class Globals
     {
         List<Person> currentPopulation = population;
         List<Person> newInfected = new List<Person>();
+        peopleToEdit.Clear();
 
         foreach (Person person in currentPopulation)
         {
-            if (!person.infected)
+            if (person.infected)
             {
                 List<Person> peopleAround = GetPeopleAround(person);
 
@@ -129,10 +133,9 @@ public static class Globals
                         newInfected.Add(possible);
                     }
                 }
-                // (1,0.5), (2,0.75), (3, 0.875) CHANCE MULTIPLIER
             }
         }
-        Debug.WriteLine(newInfected.Count);
+
         foreach (Person newInfectedPerson in newInfected)
         {
             newInfectedPerson.infected = true;
