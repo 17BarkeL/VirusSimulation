@@ -13,7 +13,7 @@ public static class Globals
     public static List<Person> peopleToEdit = new List<Person>();
     public static Timer simulationTimer;
     public static int outputLineLength = 50;
-    public static int populationNumber = outputLineLength * 40;
+    public static int populationNumber = outputLineLength * 50;
     public static int updateInterval = 1000;
     public static int infectedNumber = 10;
     public static int transmissionChance = 10;
@@ -83,7 +83,7 @@ public static class Globals
 
     public static void OutputPopulation()
     {
-        foreach (Person personToEdit in peopleToEdit)
+        foreach (Person personToEdit in peopleToEdit.ToArray())
         {
             Console.SetCursorPosition(personToEdit.X, personToEdit.Y);
 
